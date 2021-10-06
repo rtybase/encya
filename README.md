@@ -1,2 +1,4 @@
 # encya
-HTML5 client side AES-GCM encrypt/decrypt tool
+HTML5 client side AES-GCM encrypt/decrypt tool.
+
+Available at https://encya.pages.dev/.
