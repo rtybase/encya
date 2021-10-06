@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en"><head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=800"/>
+<link href="css/styles.css" rel="stylesheet"/>
+<script src="js/base.js" integrity="sha384-mKht+vcUmjWzMWjMF7B8QBMFcdOgIN+lhtfWuUQDI6Y62OQRHa7M4bv+2lBQEZ4d"></script>
+<script src="js/msgs.js" integrity="sha384-apJRBg8k4Qzfgd+jPQCbcs48NK6gXbctQpqLxwEyyHAlnKcNoKhv8ja+3Tu5/0YH"></script>
+<script>
+async function decr() {
+let keyStr = document.forms[0]['key'].value;
+let cipher = document.forms[0]['cipher'].value;
+if (keyStr && cipher) {
+	let keyDetails = JSON.parse(keyStr);
+	if (keyDetails['key'] && keyDetails['iv']) {
+		let key = await impKey(keyDetails['key']);
+		let message = await decrypt(base64ToBytesBuffer(cipher), key, base64ToBytesBuffer(keyDetails['iv']));
+		document.forms[0]['text'].value = bytesToString(message);
+	} else {alert("Key is wrong! Where did you get it from?");}
+} else {alert("Key or cipher to decrypt is empty!");}
+}
+function post(messanger) {
+let message = document.forms[0]['key'].value;
+if (message) {postMessage(messanger, message);
+} else {alert("There is nothing to post!");}
+}
+</script>
+</head>
+<body align="center"><form>
+<table border="0" CELLPADDING="0" cellspacing="0" align="center"><tr>
+ <td valign="top"><img src="img/crypto.jpg"/></td>
+ <td valign="top"><nobr><font class="b"><b>[</b>ENC<b>]</b>RYPT<b>[</b>Y<b>]</b>OUR<b>[</b>A<b>]</b>NSWER</font></nobr></td>
+ <td valign="bottom"><img src="img/encya.jpg"/></td>
+</tr></table><hr/>
+<table border="0" CELLPADDING="0" cellspacing="0" align="center"><tr><td align="right" colspan="2">
+ <font class="s"><a href=".">Encrypt</a> | <a href="dec.html"><b>Decrypt</b></a></font></td></tr><tr><td align="left" colspan="2">
+ <font class="s">What do you want to <b>decrypt</b>:</font></td></tr><tr><td align="left" colspan="2">
+ <textarea id="cipher" name="cipher" rows="6" cols="45" class="s"></textarea></td></tr><tr><td align="left" colspan="2">
+ <font class="s">Key:</font></td></tr><tr><td align="left" colspan="2">
+ <textarea id="key" name="key" rows="4" cols="45" class="s"></textarea></td></tr><tr><td align="center" colspan="2">
+ <input type="button" id="enc" name="enc" value="Decrypt" class="s" onClick="decr();" /></td></tr><tr><td align="left">
+ <font class="s">Share the key:</font></td><td align="left">
+  <table border="0" CELLPADDING="7" cellspacing="7" align="center"><tr>
+	<td><a href="javascript:void(0)" onClick="post('telegram');"><img src="img/telegram.jpg" alt="Telegram"/></a></td>
+	<td><a href="javascript:void(0)" onClick="post('viber');"><img src="img/viber.jpg" alt="Viber"/></a></td>
+	<td><a href="javascript:void(0)" onClick="post('twitter');"><img src="img/twitter.jpg" alt="Twitter"/></a></td>
+	<td><a href="javascript:void(0)" onClick="post('whatsapp');"><img src="img/whatsapp.jpg" alt="Whatsapp"/></a></td>
+	<td><a href="javascript:void(0)" onClick="post('snapchat');"><img src="img/snapchat.jpg" alt="Snapchat"/></a></td>
+	<td><a href="javascript:void(0)" onClick="post('facebook');"><img src="img/facebook.jpg" alt="Facebook"/></a></td>
+  </tr></table>
+ </td></tr>
+</table><hr/>
+<table border="0" CELLPADDING="0" cellspacing="0" align="center"><tr><td align="left">
+ <font class="s">Decrypted result:</font></td></tr><tr><td align="left">
+ <textarea id="text" name="text" rows="6" cols="45" class="s"></textarea></td></tr>
+</table>
+</form></body></html>
